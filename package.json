@@ -1,8 +1,8 @@
 {
-  "name": "nuxtBlog",
+  "name": "nuxt-course",
   "version": "1.0.0",
-  "description": "My wondrous Nuxt.js project",
-  "author": "Kaplaugher",
+  "description": "Nuxt.js course for Udemy",
+  "author": "Maximilian Schwarzmüller",
   "private": true,
   "scripts": {
     "dev": "nuxt",

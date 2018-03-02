@@ -1,22 +1,39 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1>title of the post</h1>
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail"> Last Updated on xxx</div>
-        <div class="post-detail">Author</div>
+        <div class="post-detail">Last updated on {{ loadedPost.updatedDate }}</div>
+        <div class="post-detail">Written by {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content">Content of the post</p>
+      <p class="post-content">{{ loadedPost.content }}</p>
     </section>
     <section class="post-feedback">
-      <p>Let me know what you think!</p>
+      <p>Let me know what you think about the post, send a mail to
+        <a href="mailto:feedback@my-awesome-domain.com">feedback@my-awesome-domain.com</a>.</p>
     </section>
   </div>
 </template>
-
 <script>
-export default {};
+export default {
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPost: {
+          id: "1",
+          title: `First Post (ID: ${context.route.params.id}) `,
+          previewText: "This is my first post",
+          author: "Kyle",
+          updatedDate: new Date(),
+          content: "some dummy text which is nont he preview text",
+          thumbnailLink: "https://source.unsplash.com/random"
+        }
+      });
+    }, 1000);
+  }
+};
 </script>
+
 
 <style scoped>
 .single-post-page {
@@ -71,3 +88,4 @@ export default {};
   color: salmon;
 }
 </style>
+

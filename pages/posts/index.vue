@@ -1,20 +1,49 @@
 <template>
   <div class="posts-page">
-    <PostList />
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
 <script>
-import PostPreview from '~/components/Posts/PostPreview'
-import PostList from '~/components/Posts/PostList'
+import PostList from "@/components/Posts/PostList";
+
 export default {
   components: {
-    PostPreview,
     PostList
+  },
+  asyncData(context) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          loadedPosts: [
+            {
+              id: "1",
+              title: "First Post",
+              previewText: "This is my first post",
+              thumbnailLink: "https://source.unsplash.com/random"
+            },
+            {
+              id: "2",
+              title: "Second Post",
+              previewText: "This is my second post",
+              thumbnailLink: "https://source.unsplash.com/random"
+            }
+          ]
+        });
+      }, 1000);
+    }).then(data => {
+      return data
+    }).catch(e => {
+      context.error(new Error());
+    });
+  },
+  created() {
+    this.$store.dispatch('setPosts', this.loadedPosts)
+    console.log(this.$store)
   }
-
-}
+};
 </script>
+
 
 <style scoped>
 .posts-page {
@@ -22,15 +51,4 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-.posts-list {
-  display: flex;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-
 </style>

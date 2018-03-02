@@ -1,20 +1,27 @@
 <template>
-  <nuxt-link v-bind:to="'/posts/' + id">
-        <article class="post-preview">
-          <div class="post-thumbnail" :style="{backgroundImage: 'url(' + thumbnail + ')'}"></div>
-          <div class="post-content">
-            <h1>{{ title }}</h1>
-            <p>{{ previewText }}</p>
-          </div>
-        </article>
+  <nuxt-link :to="postLink" class="post-preview">
+    <article>
+      <div
+        class="post-thumbnail"
+        :style="{backgroundImage: 'url(' + thumbnail + ')'}"></div>
+      <div class="post-content">
+        <h1>{{ title }}</h1>
+        <p>{{ previewText }}</p>
+      </div>
+    </article>
   </nuxt-link>
 </template>
+
 <script>
 export default {
   name: 'PostPreview',
   props: {
     id: {
       type: String,
+      required: true
+    },
+    isAdmin: {
+      type: Boolean,
       required: true
     },
     title: {
@@ -29,12 +36,17 @@ export default {
       type: String,
       required: true
     }
+  },
+  computed: {
+    postLink() {
+      return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id
+    }
   }
 }
 </script>
 
-<style scoped>
 
+<style scoped>
 .post-preview {
   border: 1px solid #ccc;
   box-shadow: 0 2px 2px #ccc;
@@ -71,4 +83,3 @@ a:active .post-content {
   background-color: #ccc;
 }
 </style>
-
